@@ -37,28 +37,28 @@ variables del curso operan sobre **AUC-ROC**.
 ```
 data/raw/  (9 CSV de Olist)
     │
-    │  utils.load_raw_csvs()
+    │  utils.cargar_csvs_crudos()
     ▼
 [9 tablas relacionales]
-    │  utils.build_master_table()        ← Pasos 4-5: une y agrega a nivel order_id
+    │  utils.construir_master_table()    ← Pasos 4-5: une y agrega a nivel order_id
     ▼
 data/processed/master_table.csv
-    │  features.make_features()          ← Pasos 2-3: población + target + features
+    │  features.construir_objetivo() + features.*  ← Pasos 2-3: población + target + features
     ▼
 [Master Table con features + target]
-    │  utils.assign_temporal_split()     ← Paso 4: split temporal por mes
+    │  utils.asignar_split_temporal()    ← Paso 4: split temporal por mes
     ▼
  train · val · backtest · live · predict
-    │  cleaning.DataCleaner (fit en train) ← Paso 6: clipado, NaN, agrupamiento
+    │  cleaning.LimpiadorDatos (fit en train) ← Paso 6: clipado, NaN, agrupamiento
     ▼
 [Particiones limpias]
-    │  selection.FeatureSelector()       ← Paso 7: cascada missing→PSI→corr→univariante→WOE
+    │  selection.SelectorVariables()     ← Paso 7: cascada faltantes→PSI→corr→univariante→WOE
     ▼
 [Features seleccionadas]
-    │  pipeline.build_pipeline()         ← Pasos 5-6: ColumnTransformer + RandomForest
+    │  pipeline.construir_pipeline()     ← Pasos 5-6: ColumnTransformer + RandomForest
     ▼
-models/satisfaction_pipeline_v2.0.0.pkl  ← se aplica mes a mes (predicción)
-    │  metrics.technical_metrics / business_metrics
+sprint2/models/satisfaction_pipeline_v2.0.0.pkl  ← se aplica mes a mes (predicción)
+    │  metrics.metricas_tecnicas / metricas_negocio
     ▼
 reports/metrics_sprint2.json · monthly_backtest.csv · feature_selection_report.csv
 ```
@@ -78,31 +78,48 @@ reports/metrics_sprint2.json · monthly_backtest.csv · feature_selection_report
 ## 4. Estructura del proyecto
 
 ```
-sprint2/
-├── src/                          # Paquete modular del pipeline
-│   ├── config.py                 # Configuración central (rutas, split, umbrales, versión)
-│   ├── utils.py                  # Carga de datos, master table, split temporal, E/S
-│   ├── features.py               # Paso 2-3: target + ingeniería de variables
-│   ├── cleaning.py               # Paso 6: limpieza fit/transform (clipado, NaN, agrupamiento)
-│   ├── selection.py              # Paso 7: cascada de selección (RF + AUC, PSI, WOE/IV)
-│   ├── pipeline.py               # Paso 5-6: Pipeline sklearn + persistencia (pickle)
-│   └── metrics.py                # Métricas técnicas y de negocio
-├── notebooks/
-│   └── e_commerce_sprint2.ipynb  # ENTREGABLE PRINCIPAL (pipeline completo ejecutado)
+customer_satisfaction/                  # monorepo (data/ COMPARTIDA en la raíz)
 ├── data/
-│   ├── raw/                      # CSV originales de Kaggle (ver sección 6)
-│   └── processed/                # master_table.csv generada
-├── models/                       # Pipelines serializados (.pkl versionados)
-├── reports/
-│   ├── figures/                  # Figuras del notebook
-│   ├── feature_selection_report.csv
-│   ├── monthly_backtest.csv
-│   └── metrics_sprint2.json
-├── run_pipeline.py               # Orquestador CLI (ejecución end-to-end / mensual)
-├── generate_synthetic_data.py    # SOLO DEMO: datos sintéticos para probar sin Kaggle
+│   ├── raw/                            # CSV reales de Olist (9 datasets de Kaggle)
+│   ├── processed/                      # master_table + features/parquets generados
+│   └── splits/                         # particiones temporales
+├── notebooks/                          # trabajo exploratorio organizado por sprint
+│   ├── sprint_01_eda/                  # EDA crudo, master table, clientes premium
+│   ├── sprint_02_pipeline/             # EDA master table, features, pipeline
+│   ├── sprint_03_modeling/             # (Sprint 3 · pendiente)
+│   ├── sprint_04_integration/          # (Sprint 4 · pendiente)
+│   └── _legacy/                        # notebook monolítico original del Sprint 2
+├── models/                             # pipelines serializados (.pkl versionados)
+├── sprint2/                            # ◀ PAQUETE MODULAR DEL PIPELINE (v2.1.0)
+│   ├── src/                            #   código del pipeline reproducible
+│   │   ├── config.py                   #     config central (rutas, split, umbrales, versión)
+│   │   ├── utils.py                    #     carga, master table, split temporal, E/S
+│   │   ├── features.py                 #     Paso 2-3: target + ingeniería de variables
+│   │   ├── cleaning.py                 #     Paso 6: limpieza fit/transform
+│   │   ├── comprobacion_target.py      #     Paso 2b: comprobación + targets alternativos
+│   │   ├── selection.py                #     Paso 7: cascada (RF+AUC/Gini, PSI, WOE/IV)
+│   │   ├── sensibilidad.py             #     Paso 7b: ablación de variables en revisión
+│   │   ├── figuras.py                  #     figuras de defensa generadas por el pipeline
+│   │   ├── justificacion_features.py   #     justificación de features seleccionadas
+│   │   ├── pipeline.py                 #     Paso 5-6: Pipeline sklearn + persistencia
+│   │   └── metrics.py                  #     métricas técnicas y de negocio
+│   ├── notebooks/e_commerce_sprint2.ipynb  # entregable ejecutado del paquete
+│   ├── reports/                        #   métricas, figuras y CSVs del pipeline
+│   ├── run_pipeline.py                 #   orquestador CLI (end-to-end / mensual)
+│   ├── generate_synthetic_data.py      #   SOLO DEMO: datos sintéticos sin Kaggle
+│   ├── requirements.txt
+│   └── README.md                       #   documentación detallada del paquete
+├── docs/  ·  docker/                   # documentación y contenedores (scaffolding)
 ├── requirements.txt
 └── README.md
 ```
+
+> **Sobre `sprint2/`.** Es el paquete modular y reproducible del pipeline (v2.1.0).
+> Lee los CSV reales desde la `data/` **compartida en la raíz del repo**
+> (`config.py` resuelve `parents[2]`) y escribe sus artefactos propios
+> (modelos y reportes) **localmente bajo `sprint2/`**, de modo que el sprint es
+> autocontenido sin duplicar los datos. Ver `sprint2/README.md` para el detalle
+> de ejecución y las mejoras v2.1.0 trazadas al feedback de la defensa.
 
 ---
 
@@ -110,18 +127,27 @@ sprint2/
 
 ```bash
 # 1. Instalar dependencias
-pip install -r requirements.txt
+pip install -r requirements.txt        # o:  pip install -r sprint2/requirements.txt
 
-# 2. (Opción A) Colocar los CSV reales de Kaggle en data/raw/   ← producción
-#    (Opción B) Generar datos de demostración para probar:
-python generate_synthetic_data.py
+# El pipeline modular vive en sprint2/ y lee la data/ compartida de la raíz.
+cd sprint2
 
-# 3. Ejecutar el pipeline completo
+# 2. Datos: el repo ya trae los CSV reales de Olist en ../data/raw/ (compartidos).
+#    Si faltaran, generá datos de demostración con el mismo esquema:
+#    python generate_synthetic_data.py
+
+# 3. Ejecutar el pipeline completo (lee ../data/raw/, escribe model+reports locales)
 python run_pipeline.py --rebuild
 
-# 4. O abrir el notebook (entregable principal)
+# 3b. (opcional) incluir la ablación de variables en revisión (has_comment)
+python run_pipeline.py --sensibilidad
+
+# 4. O abrir el notebook entregable del paquete
 jupyter notebook notebooks/e_commerce_sprint2.ipynb
 ```
+
+> Los notebooks exploratorios por sprint están en `notebooks/sprint_01_eda/` y
+> `notebooks/sprint_02_pipeline/`.
 
 ---
 
@@ -148,14 +174,15 @@ olist_sellers_dataset.csv         product_category_name_translation.csv
 
 ## 7. Versionado del pipeline
 
-`PIPELINE_VERSION` vive en `src/config.py`. Se incrementa con cada cambio de lógica.
+`VERSION_PIPELINE` vive en `sprint2/src/config.py`. Se incrementa con cada cambio de lógica.
 Cada artefacto serializado lleva la versión en el nombre
 (`satisfaction_pipeline_v2.0.0.pkl`) y cada corrida registra metadatos de trazabilidad
-(timestamp, random_state, split, features) en `reports/metrics_sprint2.json`.
+(timestamp, random_state, split, features) en `sprint2/reports/metrics_sprint2.json`.
 
 | Versión | Cambios |
 |---------|---------|
 | 2.0.0 | Sprint 2: pipeline modular, split temporal, selección en cascada, baseline RF. |
+| 2.1.0 | Mejoras post-defensa: **Paso 2b** de comprobación del target + targets alternativos (`comprobacion_target.py`), **Gini re-calculado por paso** en la cascada, **tabla de lift** por percentil de riesgo (`tabla_lift.csv`), **ablación de `has_comment`** (`sensibilidad.py`, flag `--sensibilidad`) y **figuras de defensa** generadas por el pipeline (`figuras.py`). Detalle completo en `sprint2/README.md`. |
 
 ---
 

@@ -1,0 +1,161 @@
+{
+  "pipeline_version": "2.1.0",
+  "run_timestamp": "2026-06-10T23:33:41",
+  "random_state": 42,
+  "target": "is_satisfied",
+  "train_end": "2018-03",
+  "val_months": [
+    "2018-04"
+  ],
+  "backtest_months": [
+    "2018-05",
+    "2018-06",
+    "2018-07"
+  ],
+  "live_month": "2018-08",
+  "prediction_month": "2018-09",
+  "n_features": 16,
+  "features": [
+    "delivery_delay_days",
+    "actual_delivery_days",
+    "estimated_delivery_days",
+    "handling_days",
+    "order_item_count",
+    "order_total_value",
+    "delivered_on_time",
+    "is_late",
+    "delivered_early_5d",
+    "is_multi_item",
+    "has_comment",
+    "same_state_seller",
+    "product_category_name_english",
+    "payment_type",
+    "customer_state",
+    "seller_state"
+  ],
+  "stage": "sprint2_baseline",
+  "metrics": {
+    "technical": {
+      "val": {
+        "accuracy": 0.8075,
+        "precision": 0.8687,
+        "recall": 0.897,
+        "f1": 0.8826,
+        "roc_auc": 0.7357,
+        "gini": 0.4715,
+        "n": 6763,
+        "tasa_positivos_real": 0.807
+      },
+      "backtest": {
+        "accuracy": 0.8112,
+        "precision": 0.8752,
+        "recall": 0.8997,
+        "f1": 0.8873,
+        "roc_auc": 0.7326,
+        "gini": 0.4653,
+        "n": 18947,
+        "tasa_positivos_real": 0.826
+      },
+      "live": {
+        "accuracy": 0.7934,
+        "precision": 0.8911,
+        "recall": 0.8574,
+        "f1": 0.8739,
+        "roc_auc": 0.7325,
+        "gini": 0.4649,
+        "n": 6332,
+        "tasa_positivos_real": 0.835
+      }
+    },
+    "business": {
+      "val": {
+        "customer_satisfaction_rate_pct": 80.7,
+        "unsatisfied_customer_rate_pct": 19.3,
+        "average_review_score": 4.206,
+        "on_time_delivery_rate_pct": 95.61,
+        "average_delay_days_when_late": 8.49,
+        "revenue_at_risk_brl": 223682.48,
+        "revenue_at_risk_pct": 20.74,
+        "average_order_value_brl": 159.5,
+        "insatisfechos_detectados": 565,
+        "insatisfechos_totales": 1305,
+        "deteccion_insatisfechos_pct": 43.3,
+        "revenue_en_riesgo_detectado_brl": 119548.43
+      },
+      "backtest": {
+        "customer_satisfaction_rate_pct": 82.6,
+        "unsatisfied_customer_rate_pct": 17.4,
+        "average_review_score": 4.286,
+        "on_time_delivery_rate_pct": 96.26,
+        "average_delay_days_when_late": 6.99,
+        "revenue_at_risk_brl": 579264.98,
+        "revenue_at_risk_pct": 19.28,
+        "average_order_value_brl": 158.54,
+        "insatisfechos_detectados": 1288,
+        "insatisfechos_totales": 3296,
+        "deteccion_insatisfechos_pct": 39.08,
+        "revenue_en_riesgo_detectado_brl": 266632.48
+      },
+      "live": {
+        "customer_satisfaction_rate_pct": 83.5,
+        "unsatisfied_customer_rate_pct": 16.5,
+        "average_review_score": 4.31,
+        "on_time_delivery_rate_pct": 93.92,
+        "average_delay_days_when_late": 4.34,
+        "revenue_at_risk_brl": 167039.48,
+        "revenue_at_risk_pct": 17.76,
+        "average_order_value_brl": 148.51,
+        "insatisfechos_detectados": 491,
+        "insatisfechos_totales": 1045,
+        "deteccion_insatisfechos_pct": 46.99,
+        "revenue_en_riesgo_detectado_brl": 84586.84
+      }
+    },
+    "monthly_backtest": [
+      {
+        "month": "2018-05",
+        "accuracy": 0.7899,
+        "precision": 0.8769,
+        "recall": 0.8621,
+        "f1": 0.8694,
+        "roc_auc": 0.7525,
+        "gini": 0.5049,
+        "n": 6730,
+        "tasa_positivos_real": 0.8114
+      },
+      {
+        "month": "2018-06",
+        "accuracy": 0.8351,
+        "precision": 0.8754,
+        "recall": 0.9352,
+        "f1": 0.9043,
+        "roc_auc": 0.7335,
+        "gini": 0.4669,
+        "n": 6078,
+        "tasa_positivos_real": 0.8332
+      },
+      {
+        "month": "2018-07",
+        "accuracy": 0.8107,
+        "precision": 0.8733,
+        "recall": 0.9046,
+        "f1": 0.8887,
+        "roc_auc": 0.7073,
+        "gini": 0.4146,
+        "n": 6139,
+        "tasa_positivos_real": 0.835
+      },
+      {
+        "month": "2018-08",
+        "accuracy": 0.7934,
+        "precision": 0.8911,
+        "recall": 0.8574,
+        "f1": 0.8739,
+        "roc_auc": 0.7325,
+        "gini": 0.4649,
+        "n": 6332,
+        "tasa_positivos_real": 0.835
+      }
+    ]
+  }
+}

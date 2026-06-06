@@ -1,0 +1,3 @@
+escenario,variables,auc_val,gini_val,delta_auc_val,decision
+set_completo,16,0.7323,0.4645,0.0,(referencia)
+sin_has_comment,15,0.6884,0.3768,0.0439,aporta señal real -> se mantiene

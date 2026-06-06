@@ -1,0 +1,31 @@
+familia,variable,gini_univariante,information_value,gap_satisfaccion_pp
+A · Tiempos de entrega,actual_delivery_days,0.3405,0.5435,
+A · Tiempos de entrega,delivery_delay_days,0.2968,0.6024,
+A · Tiempos de entrega,handling_days,0.1361,0.0719,
+A · Tiempos de entrega,estimated_delivery_days,0.057,0.0131,
+A · Tiempos de entrega,approval_time_hours,0.0283,0.0044,
+B · Banderas de entrega,delivered_early_5d,0.2588,0.4389,36.1
+B · Banderas de entrega,delivered_on_time,0.2364,0.6279,57.8
+B · Banderas de entrega,is_late,0.2364,0.6279,-57.8
+C · Valor del pedido,total_freight_value,0.14,0.0637,
+C · Valor del pedido,order_item_count,0.0851,0.0705,
+C · Valor del pedido,is_multi_item,0.0844,0.0684,-16.5
+C · Valor del pedido,order_total_value,0.0625,0.0118,
+C · Valor del pedido,payment_value,0.0625,0.0117,
+C · Valor del pedido,total_price,0.0469,0.0074,
+C · Valor del pedido,freight_ratio,0.0429,0.0068,
+C · Valor del pedido,price_per_item,0.0001,0.0008,
+D · Pago,payment_installments,0.0323,0.0045,
+D · Pago,is_installment,0.0246,0.0024,-1.7
+E · Producto,product_photos_qty,0.0259,0.0036,
+E · Producto,is_heavy_item,0.0147,0.0019,-2.3
+E · Producto,product_weight_g,0.0106,0.0058,
+F · Señal de reseña,has_comment,0.2724,0.3046,-19.8
+G · Calendario y geografía,same_state_seller,0.067,0.0207,5.3
+G · Calendario y geografía,purchase_month_num,0.0409,0.0429,
+G · Calendario y geografía,purchase_dow,0.0042,0.0022,
+G · Calendario y geografía,purchase_is_weekend,0.0032,0.0001,0.3
+H · Categóricas (IV aparte),product_category_name_english,,,
+H · Categóricas (IV aparte),payment_type,,,
+H · Categóricas (IV aparte),customer_state,,,
+H · Categóricas (IV aparte),seller_state,,,

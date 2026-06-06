@@ -1,0 +1,23 @@
+{
+  "target": "is_satisfied",
+  "regla": "review_score >= 4",
+  "n_poblacion": 96353,
+  "tasa_global_satisfechos": 0.7892,
+  "tasa_mensual_min": {
+    "mes": "2018-03",
+    "tasa": 0.6964
+  },
+  "tasa_mensual_max": {
+    "mes": "2017-08",
+    "tasa": 0.836
+  },
+  "satisfaccion_entrega_a_tiempo": 0.8264,
+  "satisfaccion_entrega_tardia": 0.2671,
+  "gap_puntos_porcentuales": 55.9,
+  "nota_no_trivialidad": "la prueba de que el target necesita un modelo es el AUC out-of-time sostenido en monthly_backtest.csv",
+  "alternativas_target_final": [
+    "ordinal_3_clases (detractor 1-2 / neutro 3 / promotor 4-5)",
+    "umbral_estricto (score >= 5, solo promotores)",
+    "target compuesto (score + señales de comportamiento)"
+  ]
+}

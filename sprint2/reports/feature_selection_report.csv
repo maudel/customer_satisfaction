@@ -1,0 +1,6 @@
+orden,metodo,features,auc_roc_train,auc_roc_val,gini_train,gini_val
+0,Estado Inicial,30,0.7694,0.7343,0.5388,0.4686
+1,metodo_faltantes,30,0.7694,0.7343,0.5388,0.4686
+2,metodo_psi,28,0.7697,0.7354,0.5393,0.4707
+3,metodo_correlacion: 0.95,26,0.7684,0.7346,0.5368,0.4692
+4,metodo_univariante: 0.05,16,0.7624,0.7323,0.5248,0.4645
