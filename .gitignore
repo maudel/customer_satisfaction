@@ -1,0 +1,12 @@
+# Archivos del entorno y temporales
+.claude/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+
+# Captura de referencia (no es parte del proyecto)
+Capture.PNG
+
+# Metadatos de Windows/WSL (mark-of-the-web)
+*:Zone.Identifier
